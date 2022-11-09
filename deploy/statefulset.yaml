@@ -3,12 +3,13 @@ kind: StatefulSet
 metadata:
   name: postgres
   namespace: postgres
+  labels: owner
 spec:
   selector:
     matchLabels:
       app: postgres
   serviceName: "postgres"
-  replicas: 1
+  replicas: 2
   template:
     metadata:
       labels:
@@ -16,23 +17,24 @@ spec:
     spec:
       terminationGracePeriodSeconds: 10
       containers:
-        - name: postgres
-          image: postgres:13.4-alpine
-          env:
-            - name: "POSTGRES_HOST_AUTH_METHOD"
-              value: trust
-          ports:
-            - containerPort: 5432
-          volumeMounts:
-            - name: postgres-data
-              mountPath: /var/lib/postgresql
+      - name: postgres
+        image: postgres:13.4-alpine
+        env:
+        - name: "POSTGRES_HOST_AUTH_METHOD"
+          value: trust
+        ports:
+        - containerPort: 5432
+        volumeMounts:
+        - name: postgres-data
+          mountPath: /var/lib/postgresql
   volumeClaimTemplates:
-    - metadata:
-        name: postgres-data
-        labels:
-      spec:
-        accessModes: ["ReadWriteOnce"]
-        storageClassName: "default"
-        resources:
-          requests:
-            storage: 5Gi
+  - metadata:
+      name: postgres-data
+      labels:
+    spec:
+      accessModes: ["ReadWriteOnce"]
+      storageClassName: "default"
+      resources:
+        requests:
+          storage: 5Gi
+
