@@ -1,14 +1,14 @@
 apiVersion: pac.weave.works/v1
 kind: Policy
 metadata:
-  name: weave.policies.postgres-storage-minimum-replica-count
+  name: weave.policies.postgres-storage-missing-replica-count
 spec:
-  id: weave.policies.postgres-storage-minimum-replica-count
-  name: PostGres Storage Minimum Replica Count
+  id: weave.policies.postgres-storage-missing-replica-count
+  name: PostGres Storage Missing Replica Count
   enabled: true
-  description: "Use this Policy to to check the replica count for your postgres storage. The value set in the Policy is greater than or equal to the amount desired, so if the replica count is lower than what is specified, the Policy will be in violation. \n"
+  description: "Use this Policy to to check the replica count for your postgres storageos storage exists. If the replica count label is missing, the Policy will be in violation. \n"
   how_to_solve: |
-    The replica count should be a value equal or greater than what is set in the Policy.
+    The replica count should be set.
     ```
     spec: 
       volumeClaimTemplates:
@@ -26,10 +26,6 @@ spec:
         - weave.controls.soc2-type-i.2.1.1
   tags: [soc2-type1, prod, postgres]
   parameters:
-    - name: replica_count
-      type: integer
-      required: true
-      value: 1
     - name: exclude_namespaces
       type: array
       required: false
@@ -43,7 +39,7 @@ spec:
       required: false
       value:
   code: |
-    package weave.advisor.pods.postgres_storage_replica_count
+    package weave.advisor.pods.postgres_storage_missing_replica_count
     import future.keywords.in
     app_name = "postgres"
     replica_count := input.parameters.replica_count
@@ -59,9 +55,9 @@ spec:
       not controller_input.spec.volumeClaimTemplates[0].metadata.labels["storageos.com/replicas"]
       result = {
         "issue detected": true,
-        "msg": sprintf("storageos.com/replicas count must be greater than or equal to '%v'; found '%v'.", [replica_count, controller_input.spec.volumeClaimTemplates[0].metadata.labels["storageos.com/replicas"]]),
-        "violating_key": "spec.volumeClaimTemplates[0].metadata.labels['storageos.com/replicas']",
-        "recommended_value": replica_count
+        "msg": sprintf("storageos.com/replicas count label must exist; found '%v'.", [controller_input.spec.volumeClaimTemplates[0].metadata.labels]),
+        "violating_key": "spec.volumeClaimTemplates[0].metadata.labels",
+        "recommended_value": "storageos.com/replicas"
       }
     }
     controller_input = input.review.object
