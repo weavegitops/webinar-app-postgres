@@ -32,7 +32,7 @@ spec:
       labels: 'storageos.com/replicas: "1"'
     spec:
       accessModes: ["ReadWriteOnce"]
-      storageClassName: "default"
+      storageClassName: storageos
       resources:
         requests:
           storage: 5Gi
