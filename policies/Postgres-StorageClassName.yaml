@@ -58,8 +58,8 @@ spec:
       not controller_input.spec.volumeClaimTemplates[0].spec.storageClassName == storage_class_name
       result = {
         "issue detected": true,
-        "msg": sprintf("Requested storageClassName is '%v'; found '%v'.", [replica_count, controller_input.spec.volumeClaimTemplates[0].spec.storageClassName"),
-        "violating_key": "spec.volumeClaimTemplates[0].spec.storageClassName"",
+        "msg": sprintf("Requested storageClassName is '%v'; found '%v'.", [replica_count, controller_input.spec.volumeClaimTemplates[0].spec.storageClassName]),
+        "violating_key": "spec.volumeClaimTemplates[0].spec.storageClassName",
         "recommended_value": storage_class_name
       }
     }
