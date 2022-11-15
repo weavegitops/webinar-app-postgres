@@ -57,6 +57,7 @@ spec:
         "issue detected": true,
         "msg": sprintf("storageos.com/replicas count label must exist; found '%v'.", [controller_input.spec.volumeClaimTemplates[0].metadata.labels]),
         "violating_key": "spec.volumeClaimTemplates[0].metadata.labels",
+        "recommended_value": "storageos.com/replicas: \"1\""
       }
     }
     controller_input = input.review.object
