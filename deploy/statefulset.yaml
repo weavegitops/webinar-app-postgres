@@ -29,9 +29,12 @@ spec:
   volumeClaimTemplates:
   - metadata:
       name: postgres-data
+      labels:
+        storageos.com/replicas: "0"
+        storageos.com/nocompress: "true"
     spec:
       accessModes: ["ReadWriteOnce"]
-      storageClassName: "default"
+      storageClassName: "storageos"
       resources:
         requests:
           storage: 5Gi
