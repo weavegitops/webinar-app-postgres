@@ -30,7 +30,7 @@ spec:
   - metadata:
       name: postgres-data
       labels:
-        storageos.com/replicas: "1"
+        storageos.com/replicas: "0"
         storageos.com/nocompress: "true"
     spec:
       accessModes: ["ReadWriteOnce"]
