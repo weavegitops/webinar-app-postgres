@@ -29,7 +29,9 @@ spec:
   volumeClaimTemplates:
   - metadata:
       name: postgres-data
-      labels: 'storageos.com/replicas: "1"'
+      labels: |2-
+
+            storageos.com/replicas: "1"
     spec:
       accessModes: ["ReadWriteOnce"]
       storageClassName: storageos
