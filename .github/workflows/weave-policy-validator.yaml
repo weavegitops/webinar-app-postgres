@@ -1,6 +1,6 @@
 name: Weave-policy-validator
 on:
-  push:
+  pull_request:
     branches:
       - main
 jobs:
