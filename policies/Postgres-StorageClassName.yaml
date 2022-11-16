@@ -60,7 +60,6 @@ spec:
         "issue detected": true,
         "msg": sprintf("Requested storageClassName is '%v'; found '%v'.", [storage_class_name, controller_input.spec.volumeClaimTemplates[0].spec.storageClassName]),
         "violating_key": "spec.volumeClaimTemplates[0].spec.storageClassName",
-        "recommended_value": storage_class_name
       }
     }
     controller_input = input.review.object
