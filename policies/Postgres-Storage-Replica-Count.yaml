@@ -27,9 +27,9 @@ spec:
   tags: [soc2-type1, prod, postgres]
   parameters:
     - name: replica_count
-      type: integer
+      type: string
       required: true
-      value: 1
+      value: "1"
     - name: exclude_namespaces
       type: array
       required: false
@@ -56,12 +56,12 @@ spec:
       some i
       containers := controller_spec.containers[i]
       contains(containers.image, app_name)
-      not controller_input.spec.volumeClaimTemplates[0].metadata.labels["storageos.com/replicas"] == "replica_count"
+      not controller_input.spec.volumeClaimTemplates[0].metadata.labels["storageos.com/replicas"] == replica_count
       result = {
         "issue detected": true,
         "msg": sprintf("storageos.com/replicas count must equal to '%v'; found '%v'.", [replica_count, controller_input.spec.volumeClaimTemplates[0].metadata.labels["storageos.com/replicas"]]),
         "violating_key": "spec.volumeClaimTemplates[0].metadata.labels[storageos.com/replicas]",
-        "recommended_value": "replica_count"
+        "recommended_value": replica_count
       }
     }
     controller_input = input.review.object
