@@ -60,7 +60,7 @@ spec:
       result = {
         "issue detected": true,
         "msg": sprintf("storageos.com/replicas count must equal to '%v'; found '%v'.", [replica_count, controller_input.spec.volumeClaimTemplates[0].metadata.labels["storageos.com/replicas"]]),
-        "violating_key": `spec.volumeClaimTemplates[0].metadata.labels.["storageos.com/replicas"]`,
+        "violating_key": sprintf("spec.volumeClaimTemplates[0].metadata.labels.%v", ["storageos.com/replicas"] ),
         "recommended_value": replica_count
       }
     }
