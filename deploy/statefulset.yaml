@@ -29,6 +29,7 @@ spec:
   volumeClaimTemplates:
   - metadata:
       name: postgres-data
+    labels:
     spec:
       accessModes: ["ReadWriteOnce"]
       storageClassName: "default"
